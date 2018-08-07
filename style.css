@@ -1,3 +1,8 @@
-#senate-data{
-    border-style: 2px black solid;
+.container{
+    font-family: cursive;
+}
+.panel-footer p{
+    align-content: center;
+    justify-content: center;
+    display:flex;
 }

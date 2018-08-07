@@ -89,3 +89,24 @@ function tableFunction2(members){
     }
 }
 tableFunction2(members);
+
+
+
+function filterByParty(){
+    var checkedBoxes = document.querySelectorAll('input[name=myCheck]:checked');
+    for(i=0; i< checkedBoxes.length; i++){
+       if (checkedBoxes[i].value == "R"){
+            console.log("R");
+        }else if (checkedBoxes[i].value == "D"){
+            console.log("D");
+        }else if (checkedBoxes[i].value == "I") {
+            console.log("I");
+        }
+    }
+}
+
+filterByParty();
+
+
+
+ 
