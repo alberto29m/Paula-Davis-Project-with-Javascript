@@ -1,4 +1,4 @@
-var members = data.results[0].members;
+var allMembers = data.results[0].members;
 /*function tableFunction(members){
     var senateData = document.getElementById("senate-data");
     var firstRow = document.createElement("tr");
@@ -38,30 +38,12 @@ var members = data.results[0].members;
 
 tableFunction(members);*/
 
-
-function tableFunction2(members){
+tableFunctionBody(allMembers)
+function tableFunctionBody(members){
     var senateData = document.getElementById("senate-data");
-    var header = senateData.createTHead();
-    senateData.appendChild(header);
     var body = document.createElement("tBody");
+    body.setAttribute("id", "tBody");
     senateData.appendChild(body);
-    var firstRow = document.createElement("tr");
-    var cols1th = document.createElement("th");
-    var cols2th = document.createElement("th");
-    var cols3th = document.createElement("th");
-    var cols4th = document.createElement("th");
-    var cols5th = document.createElement("th");
-    cols1th.textContent ="Senator's Name";
-    cols2th.textContent ="Party Affilication";
-    cols3th.textContent ="State";
-    cols4th.textContent ="Seniority";
-    cols5th.textContent ="Votes Percentage";
-    header.appendChild(firstRow);
-    firstRow.appendChild(cols1th);
-    firstRow.appendChild(cols2th);
-    firstRow.appendChild(cols3th);
-    firstRow.appendChild(cols4th);
-    firstRow.appendChild(cols5th);
     for(i = 0; i< members.length; i++){
         var row = document.createElement("tr");
         var middleName = members[i].middle_name;
@@ -88,25 +70,76 @@ function tableFunction2(members){
         body.appendChild(row);
     }
 }
-tableFunction2(members);
+//tableFunction2(members);
 
 
+function tableFunctionHead(){
+    var senateData = document.getElementById("senate-data");
+    var header = senateData.createTHead();
+    senateData.appendChild(header);
+     var firstRow = document.createElement("tr");
+    var cols1th = document.createElement("th");
+    var cols2th = document.createElement("th");
+    var cols3th = document.createElement("th");
+    var cols4th = document.createElement("th");
+    var cols5th = document.createElement("th");
+    cols1th.textContent ="Senator's Name";
+    cols2th.textContent ="Party Affilication";
+    cols3th.textContent ="State";
+    cols4th.textContent ="Seniority";
+    cols5th.textContent ="Votes Percentage";
+    header.appendChild(firstRow);
+    firstRow.appendChild(cols1th);
+    firstRow.appendChild(cols2th);
+    firstRow.appendChild(cols3th);
+    firstRow.appendChild(cols4th);
+    firstRow.appendChild(cols5th);
+}
+
+ tableFunctionHead()
 
 function filterByParty(){
     var checkedBoxes = document.querySelectorAll('input[name=myCheck]:checked');
-    for(i=0; i< checkedBoxes.length; i++){
-       if (checkedBoxes[i].value == "R"){
-            console.log("R");
-        }else if (checkedBoxes[i].value == "D"){
-            console.log("D");
-        }else if (checkedBoxes[i].value == "I") {
-            console.log("I");
+    //checkBoxes = es un array con los IDs de los checkboxes que estén checkeados.
+    var newArray = []
+    var newMembersArray = []
+
+    for (var i = 0; i < checkedBoxes.length; i++) {
+        newArray.push(checkedBoxes[i].value);
+    }
+    console.log(newArray);
+    for(var i=0; i< newArray.length; i++){
+       if (newArray[i] == "R"){
+            for(var j = 0; j<  allMembers.length; j++){
+                if( allMembers[j].party == "R"){
+                    newMembersArray.push( allMembers[j]);
+                }
+            }
+        }else if (newArray[i] == "D"){
+            for(var l = 0; l< allMembers.length; l++){
+                if( allMembers[l].party == "D"){
+                    newMembersArray.push( allMembers[l]);
+                }
+            }
+        }else if (newArray[i] == "I"){
+            for(var n = 0; n< allMembers.length; n++){
+                if( allMembers[n].party == "I"){
+                    newMembersArray.push( allMembers[n]);
+                }
+                
+            }
         }
     }
+   
+    tableFunctionBody(newMembersArray);
 }
 
-filterByParty();
 
-
-
+document.getElementById("checkboxes").onchange = function () {
+    removeTable();
+    filterByParty();
+};
+function removeTable(){
+    document.getElementById("tBody").remove();
+}
  
