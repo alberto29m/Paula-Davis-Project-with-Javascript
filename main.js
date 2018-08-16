@@ -103,43 +103,83 @@ function filterByParty(){
     //checkBoxes = es un array con los IDs de los checkboxes que estén checkeados.
     var newArray = []
     var newMembersArray = []
+    var options1 = makeNewArray();
+    var select = document.getElementById("dropdownMenu");
+    var selectedValue = dropdownMenu.options[dropdownMenu.selectedIndex].value;
 
     for (var i = 0; i < checkedBoxes.length; i++) {
         newArray.push(checkedBoxes[i].value);
     }
     console.log(newArray);
     for(var i=0; i< newArray.length; i++){
-       if (newArray[i] == "R"){
             for(var j = 0; j<  allMembers.length; j++){
-                if( allMembers[j].party == "R"){
+                if( (allMembers[j].party == newArray[i]) && (allMembers[j].state === selectedValue)){
                     newMembersArray.push( allMembers[j]);
+                }else if((allMembers[j].party == newArray[i]) && (selectedValue == "all")){
+                    newMembersArray.push(allMembers[j]);
                 }
             }
-        }else if (newArray[i] == "D"){
-            for(var l = 0; l< allMembers.length; l++){
-                if( allMembers[l].party == "D"){
-                    newMembersArray.push( allMembers[l]);
-                }
-            }
-        }else if (newArray[i] == "I"){
-            for(var n = 0; n< allMembers.length; n++){
-                if( allMembers[n].party == "I"){
-                    newMembersArray.push( allMembers[n]);
-                }
-                
-            }
-        }
     }
-   
     tableFunctionBody(newMembersArray);
 }
-
+document.getElementById("dropdownMenu").onchange = function () {
+    updateTable();
+};
 
 document.getElementById("checkboxes").onchange = function () {
+    updateTable();
+};
+
+function updateTable(){
     removeTable();
     filterByParty();
-};
+}
 function removeTable(){
     document.getElementById("tBody").remove();
 }
  
+
+
+function makeNewArray(){
+    var arrayOptions=[];
+    
+    for (i = 0; i < allMembers.length; i++){
+        if(arrayOptions.indexOf(allMembers[i].state)=== -1){    
+        arrayOptions.push(allMembers[i].state);
+        }
+    }
+    arrayOptions.sort();                
+    return arrayOptions;
+}
+
+function createDropdownMenu(){
+    var select = document.getElementById("dropdownMenu");
+    var options1 = makeNewArray();
+    for (var i = 0; i<options1.length ; i++){
+        var  option = document.createElement("option");
+        option.textContent =options1[i]; 
+        select.appendChild(option);
+        option.setAttribute("value", options1[i]);
+    }
+}
+createDropdownMenu();
+
+/*function filterByDropdownMenu(){
+    var newMembersState = [];
+    var options1 = makeNewArray();
+    var select = document.getElementById("dropdownMenu");
+    var selectedValue = dropdownMenu.options[dropdownMenu.selectedIndex].value;
+    console.log(selectedValue);
+    for(var j = 0; j<  allMembers.length; j++){
+        if( allMembers[j].state === selectedValue){
+                  newMembersState.push( allMembers[j]);
+            }
+        }
+       
+    console.log(newMembersState);
+    tableFunctionBody(newMembersState);
+}
+
+filterByDropdownMenu();*/
+
+
