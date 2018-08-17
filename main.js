@@ -1,5 +1,7 @@
 var allMembers = data.results[0].members;
-/*function tableFunction(members){
+/*
+Así hice la función en primera instancia, de forma limpia. Después quise simplificar el código, pero funciona igual.
+function tableFunction(members){
     var senateData = document.getElementById("senate-data");
     var firstRow = document.createElement("tr");
     var cols1th = document.createElement("th");
@@ -38,7 +40,7 @@ var allMembers = data.results[0].members;
 
 tableFunction(members);*/
 
-tableFunctionBody(allMembers)
+tableFunctionBody(allMembers);
 function tableFunctionBody(members){
     var senateData = document.getElementById("senate-data");
     var body = document.createElement("tBody");
