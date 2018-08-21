@@ -10,6 +10,10 @@
     </head>
     
     <body>
+        <div class = "container">
+         <div>
+                <img src = "Images/logo.jpg" class="img-rounded" alt = "TGIF_logo">
+         </div>
          <div class = "panel panel-default"> 
                 <nav class="navbar navbar-default">
                   <div class = "container-fluid">
@@ -41,135 +45,42 @@
              </div>
   
 
-        <header>            
-            <div>
+        <div class = "panel panel-default">
+            <div class = "panel-body">
+                <div class = "row">
+                    <div  class = "col-sm-6">
+                        <h2>Party Loyalty</h2>
+                        <p>Those who consider themselves to be strong partisans, strong Democrats and strong Republicans respectively, tend to be the most faithful in voting for their party's nominee for office and legislation that backs their party's agenda. </p>
+    	            </div>
+                    <div  class = "col-sm-6">
+                        <h2>Senate at a glance</h2>
+                        <table id = "senate-glance">
+                            
+                        </table>
+                </div>
+                </div>
+                <div class = "row">
+                    <div  class = "col-sm-6">
+                        <h2>Least Loyal (Bottom 10% of Party)</h2>
+                        <table id = "least-loyal">
+                            
+                        </table>
+                    </div>
+                    <div  class = "col-sm-6">
+                            <h2>Most Loyal (Top 10% of Party)</h2>
+                            <table id = "most-loyal">
+                                
+                            </table>
+                    </div>
             </div>
-        </header>
-        <!--Table container-->
-        <div>
-            <h2>Party Loyalty</h2>
-            <p>Those who consider themselves to be strong partisans, strong Democrats and strong Republicans respectively, tend to be the most faithful in voting for their party's nominee for office and legislation that backs their party's agenda. </p>
-    	    
-            <h2>Senate at a glance</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Party</th>
-                        <th>Number of Reps</th>
-                        <th>% Voted with Prty</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Republican</td>
-                        <td>--</td>
-                        <td>--</td>
-                    </tr>
-                    <tr>
-                        <td>Democrat</td>
-                        <td>--</td>
-                        <td>--</td>
-                    </tr>
-                    <tr>
-                        <td>Independent</td>
-                        <td>--</td>
-                        <td>--</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h2>Least Loyal (Bottom 10% of Party)</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Number Party Votes</th>
-                        <th>% Party Votes</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>--</td>
-                        <td>--</td>
-                        <td>--</td>
-                    </tr>
-                    <tr>
-                        <td>--</td>
-                        <td>--</td>
-                        <td>--</td>
-                    </tr>
-                    <tr>
-                        <td>--</td>
-                        <td>--</td>
-                        <td>--</td>
-                    </tr>
-                    <tr>
-                        <td>--</td>
-                        <td>--</td>
-                        <td>--</td>
-                    </tr>
-                    <tr>
-                        <td>--</td>
-                        <td>--</td>
-                        <td>--</td>
-                    </tr>
-                    <tr>
-                        <td>--</td>
-                        <td>--</td>
-                        <td>--</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h2>Most Loyal (Top 10% of Party)</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Number Party Votes</th>
-                        <th>% Party Votes</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>--</td>
-                        <td>--</td>
-                        <td>--</td>
-                    </tr>
-                    <tr>
-                        <td>--</td>
-                        <td>--</td>
-                        <td>--</td>
-                    </tr>
-                    <tr>
-                        <td>--</td>
-                        <td>--</td>
-                        <td>--</td>
-                    </tr>
-                    <tr>
-                        <td>--</td>
-                        <td>--</td>
-                        <td>--</td>
-                    </tr>
-                    <tr>
-                        <td>--</td>
-                        <td>--</td>
-                        <td>--</td>
-                    </tr>
-                    <tr>
-                        <td>--</td>
-                        <td>--</td>
-                        <td>--</td>
-                    </tr>
-                    <tr>
-                        <td>--</td>
-                        <td>--</td>
-                        <td>--</td>
-                    </tr>
-                </tbody>
-            </table>
-
-    	</div> 
-    <script src = "party-loyalty-statistics.js"></script>
+            
+            </div>
+            <div class = "panel-footer">
+                <p>©2016 TGIF | All Right Reservered</p>     
+           </div>
+            </div>
+    	</div>
+    <script src = "senate.js"></script>
+    <script src = "attendance-statistics.js"></script>
 </body>
 </html>
