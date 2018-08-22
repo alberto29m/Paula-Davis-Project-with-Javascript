@@ -151,24 +151,20 @@ membersVoteTheirParty(membersAll,sortByLeast(),leastArray);
 
 
 
-
-console.log(dem);
-
-
 var statistics={
     "Number_Of_Democrats":dem,
     "Number_Of_Republicans":rep,
     "Number_Of_Independents":ind,
     "Democrats_Average_Voting":demVotes,
     "Republicans_Average_Voting":repVotes,
-    "Members_Missed_Most_Votes":membersVoteTheirParty(membersAll,sortByMost(),mostArray),
-    "Members_Missed_Least_Votes":membersVoteTheirParty(membersAll,sortByLeast(),leastArray),      
+    "Members_Missed_Most_Votes":mostArray,
+    "Members_Missed_Least_Votes":leastArray,      
 }
 
 
-// TABLA PARA SENATE AT A GLANCE:
+// TABLA PARA GLANCE:
 function tableFunctionHeadSenateGlance(){
-    var senateData = document.getElementById("senate-glance");
+    var senateData = document.getElementById("glance");
     var header = senateData.createTHead();
     senateData.appendChild(header);
      var firstRow = document.createElement("tr");
@@ -186,7 +182,7 @@ function tableFunctionHeadSenateGlance(){
 tableFunctionHeadSenateGlance()
 
 function tableFunctionBodySenateGlance(){
-    var senateData = document.getElementById("senate-glance");
+    var senateData = document.getElementById("glance");
     var body = document.createElement("tBody");
     body.setAttribute("id", "tBody");
     senateData.appendChild(body);
@@ -219,57 +215,103 @@ function tableFunctionBodySenateGlance(){
 }
 tableFunctionBodySenateGlance()
 
-//TABLA PARA LLEAST LOYAL:
-function tableFunctionHeadLoyal(){
-    var senateData = document.getElementById("least-loyal");
-    var header = senateData.createTHead();
-    senateData.appendChild(header);
-     var firstRow = document.createElement("tr");
+
+if ((window.location.pathname == '/senate-party-loyalty.html')||(window.location.pathname == '/house-party-loyalty.html')){
+    //TABLA PARA LOYAL:
+    function tableFunctionHeadLoyal(id){
+        var table = document.getElementById(id);
+    //    var header = senateData.createTHead();
+    //    senateData.appendChild(header);
+        var firstRow = document.createElement("tr");
+        var cols1th = document.createElement("th");
+        var cols2th = document.createElement("th");
+        var cols3th = document.createElement("th");
+        cols1th.textContent ="Name";
+        cols2th.textContent ="Number Party Votes";
+        cols3th.textContent ="% Party Votes";
+        table.appendChild(firstRow);
+        firstRow.appendChild(cols1th);
+        firstRow.appendChild(cols2th);
+        firstRow.appendChild(cols3th);
+    }
+    tableFunctionHeadLoyal("most-loyal");
+    tableFunctionHeadLoyal("least-loyal");
+
+    function tableFunctionBodyLoyal(array,id){
+        var senateData = document.getElementById(id);
+        var body = document.createElement("tBody");
+        body.setAttribute("id", "tBody");
+        senateData.appendChild(body);
+        for(i = 0; i< array.length; i++){
+            var row = document.createElement("tr");
+            var cols1 = document.createElement("td");
+            var cols2 = document.createElement("td");
+            var cols3 = document.createElement("td");
+            var middleName = array[i].middle_name;
+            if(middleName == null){middleName = ""};
+            var name = array[i].first_name + array[i].middle_name  + " " + array[i].last_name;
+            var nameLink = document.createElement("a");
+            nameLink.setAttribute("href", array[i].url);
+            nameLink.textContent = name;
+            cols1.appendChild(nameLink);
+            cols2.textContent = array[i].total_votes;
+            cols3.textContent = array[i].votes_with_party_pct + "%";
+            row.appendChild(cols1);
+            row.appendChild(cols2);
+            row.appendChild(cols3);
+            body.appendChild(row);
+        }
+    }
+    tableFunctionBodyLoyal(statistics.Members_Missed_Least_Votes, "least-loyal");
+    tableFunctionBodyLoyal(statistics.Members_Missed_Most_Votes, "most-loyal");
+    
+}else if((window.location.pathname == '/senate-attendance.html')||(window.location.pathname == '/house-attendance.html')){
+
+//TABLAS PARA ATTENDANCE:
+function tableFunctionHeadAttendance(id){
+    var attendanceData = document.getElementById(id);
+//    var header = attendancedata.createTHead();
+//    attendancedata.appendChild(header);
+    var firstRow = document.createElement("tr");
     var cols1th = document.createElement("th");
     var cols2th = document.createElement("th");
     var cols3th = document.createElement("th");
     cols1th.textContent ="Name";
-    cols2th.textContent ="Number Party Votes";
-    cols3th.textContent ="% Party Votes";
-    header.appendChild(firstRow);
+    cols2th.textContent ="Number Missed Votes";
+    cols3th.textContent ="% Missed Votes";
+    attendanceData.appendChild(firstRow);
     firstRow.appendChild(cols1th);
     firstRow.appendChild(cols2th);
     firstRow.appendChild(cols3th);
 }
-tableFunctionHeadLoyal();
+tableFunctionHeadAttendance("most-engage");
+tableFunctionHeadAttendance("least-engage");
 
-function tableFunctionBodyLoyal(){
-    var senateData = document.getElementById("least-loyal");
+function tableFunctionBodyAttendance(array,id){
+    var senateData = document.getElementById(id);
     var body = document.createElement("tBody");
     body.setAttribute("id", "tBody");
     senateData.appendChild(body);
-    for(i = 0; i< 4; i++){
+    for(i = 0; i< array.length; i++){
         var row = document.createElement("tr");
         var cols1 = document.createElement("td");
         var cols2 = document.createElement("td");
         var cols3 = document.createElement("td");
-        if(i == 0){
-            cols1.textContent = "Democrats";
-            cols2.textContent = statistics.Number_Of_Democrats;
-            cols3.textContent = statistics.Democrats_Average_Voting + "%";
-        }else if(i == 1){
-            cols1.textContent = "Republicans";
-            cols2.textContent = statistics.Number_Of_Republicans;
-            cols3.textContent = statistics.Republicans_Average_Voting + "%";
-        }else if(i == 2){
-            cols1.textContent = "Independents";
-            cols2.textContent = statistics.Number_Of_Independents;
-            cols3.textContent = 0 + "%";
-        }else if(i == 3){
-            cols1.textContent = "Total";
-            cols2.textContent = statistics.Number_Of_Democrats + statistics.Number_Of_Republicans + statistics.Number_Of_Independents;
-        }
+        var middleName = array[i].middle_name;
+        if(middleName == null){middleName = ""};
+        var name = array[i].first_name + array[i].middle_name  + " " + array[i].last_name;
+        var nameLink = document.createElement("a");
+        nameLink.setAttribute("href", array[i].url);
+        nameLink.textContent = name;
+        cols1.appendChild(nameLink);
+        cols2.textContent = array[i].missed_votes;
+        cols3.textContent = array[i].missed_votes_pct + "%";
         row.appendChild(cols1);
         row.appendChild(cols2);
         row.appendChild(cols3);
         body.appendChild(row);
     }
 }
-
-
-
+tableFunctionBodyAttendance(statistics.Members_Missed_Least_Votes, "least-engage");
+tableFunctionBodyAttendance(statistics.Members_Missed_Most_Votes, "most-engage");
+}
