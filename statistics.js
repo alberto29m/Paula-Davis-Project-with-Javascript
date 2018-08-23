@@ -1,4 +1,74 @@
-var membersAll = data.results[0].members;
+//var membersAll = data.results[0].members;
+var data;
+var membersAll;
+
+
+if ((window.location.pathname == '/senate-party-loyalty.html')||(window.location.pathname == '/senate-attendance.html')){
+fetch("https://api.propublica.org/congress/v1/113/senate/members.json", {
+ 
+   method: "GET",
+   headers: {
+       'X-API-Key': 'DHbvC92HKDPm4s3ZZj6QFYhPB4gm4bqvqJlGFEv5'
+   }
+}).then(function (response) {
+ 
+   if (response.ok) {
+       // add a new promise to the chain
+       return response.json();
+   }
+   // signal a server error to the chain
+   throw new Error(response.statusText);
+}).then(function (json) {
+   // equals to .success in JQuery Ajax call;
+    data = json;
+    membersAll = data.results[0].members;
+    console.log(membersAll);
+    numberOfMembersEachParty();
+    votesWithPartyAvarage();
+    createArrayVotesParty(membersAll);
+    sortByLeast();
+    sortByMost();
+    membersVoteTheirParty(membersAll,sortByMost(),mostArray);
+    membersVoteTheirParty(membersAll,sortByLeast(),leastArray);
+    tableFunctionHeadSenateGlance();
+    tableFunctionBodySenateGlance();
+    tableFunctionHeadLoyal("most-loyal");
+    tableFunctionHeadLoyal("least-loyal");
+    tableFunctionBodyLoyal(statistics.Members_Missed_Least_Votes, "least-loyal");
+    tableFunctionBodyLoyal(statistics.Members_Missed_Most_Votes, "most-loyal");
+    tableFunctionHeadAttendance("most-engage");
+    tableFunctionHeadAttendance("least-engage");
+    tableFunctionBodyAttendance(statistics.Members_Missed_Least_Votes, "least-engage");
+    tableFunctionBodyAttendance(statistics.Members_Missed_Most_Votes, "most-engage");
+    callMyFunctionTable();
+  
+}).catch(function (error) {
+   // called when an error occurs anywhere in the chain
+   console.log("Request failed: " + error.message);
+});
+}else if ((window.location.pathname == '/house-attendance.html')||(window.location.pathname == '/house-party-loyalty.html')){
+
+fetch("https://api.propublica.org/congress/v1/113/house/members.json", {
+ 
+   method: "GET",
+   headers: {
+       'X-API-Key': 'DHbvC92HKDPm4s3ZZj6QFYhPB4gm4bqvqJlGFEv5'
+   }
+}).then(function (response) {
+ 
+   if (response.ok) {
+       return response.json();
+   }
+   throw new Error(response.statusText);
+}).then(function (json) {
+   data2 = json;
+console.log(data2);
+  
+}).catch(function (error) {
+   console.log("Request failed: " + error.message);
+});
+}
+
 
 var dem = 0;
 var rep = 0;
@@ -19,7 +89,9 @@ function numberOfMembersEachParty(){
     console.log(rep);
     console.log(ind);
 }
-numberOfMembersEachParty();
+
+
+
 var demVotes;
 var repVotes;
 function votesWithPartyAvarage(){
@@ -39,7 +111,8 @@ function votesWithPartyAvarage(){
     console.log(demVotes);
     console.log(repVotes);
 }
-votesWithPartyAvarage()
+
+
 
 
 /*var tenPctLeastArrayMembers = [];
@@ -88,7 +161,8 @@ function createArrayVotesParty(array){
         arrayVotesParty.push(array[i].votes_with_party_pct);
     }
 }
-createArrayVotesParty(membersAll);
+
+
 
 function sortByLeast(){
     arrayVotesParty.sort(function(a, b){return a-b});
@@ -145,8 +219,6 @@ function membersVoteTheirParty(array,array2,array3){
     console.log(array3);
 }
 
-membersVoteTheirParty(membersAll,sortByMost(),mostArray);
-membersVoteTheirParty(membersAll,sortByLeast(),leastArray);
 
 
 
@@ -179,7 +251,7 @@ function tableFunctionHeadSenateGlance(){
     firstRow.appendChild(cols2th);
     firstRow.appendChild(cols3th);
 }
-tableFunctionHeadSenateGlance()
+
 
 function tableFunctionBodySenateGlance(){
     var senateData = document.getElementById("glance");
@@ -213,59 +285,57 @@ function tableFunctionBodySenateGlance(){
         body.appendChild(row);
     }
 }
-tableFunctionBodySenateGlance()
 
 
-if ((window.location.pathname == '/senate-party-loyalty.html')||(window.location.pathname == '/house-party-loyalty.html')){
+
+
     //TABLA PARA LOYAL:
-    function tableFunctionHeadLoyal(id){
-        var table = document.getElementById(id);
-    //    var header = senateData.createTHead();
-    //    senateData.appendChild(header);
-        var firstRow = document.createElement("tr");
-        var cols1th = document.createElement("th");
-        var cols2th = document.createElement("th");
-        var cols3th = document.createElement("th");
-        cols1th.textContent ="Name";
-        cols2th.textContent ="Number Party Votes";
-        cols3th.textContent ="% Party Votes";
-        table.appendChild(firstRow);
-        firstRow.appendChild(cols1th);
-        firstRow.appendChild(cols2th);
-        firstRow.appendChild(cols3th);
-    }
-    tableFunctionHeadLoyal("most-loyal");
-    tableFunctionHeadLoyal("least-loyal");
+//    function tableFunctionHeadLoyal(id){
+//        var table = document.getElementById(id);
+//    //    var header = senateData.createTHead();
+//    //    senateData.appendChild(header);
+//        var firstRow = document.createElement("tr");
+//        var cols1th = document.createElement("th");
+//        var cols2th = document.createElement("th");
+//        var cols3th = document.createElement("th");
+//        cols1th.textContent ="Name";
+//        cols2th.textContent ="Number Party Votes";
+//        cols3th.textContent ="% Party Votes";
+//        table.appendChild(firstRow);
+//        firstRow.appendChild(cols1th);
+//        firstRow.appendChild(cols2th);
+//        firstRow.appendChild(cols3th);
+//    }
+//
+//
+//    function tableFunctionBodyLoyal(array,id){
+//        var senateData = document.getElementById(id);
+//        var body = document.createElement("tBody");
+//        body.setAttribute("id", "tBody");
+//        senateData.appendChild(body);
+//        for(i = 0; i< array.length; i++){
+//            var row = document.createElement("tr");
+//            var cols1 = document.createElement("td");
+//            var cols2 = document.createElement("td");
+//            var cols3 = document.createElement("td");
+//            var middleName = array[i].middle_name;
+//            if(middleName == null){middleName = ""};
+//            var name = array[i].first_name + array[i].middle_name  + " " + array[i].last_name;
+//            var nameLink = document.createElement("a");
+//            nameLink.setAttribute("href", array[i].url);
+//            nameLink.textContent = name;
+//            cols1.appendChild(nameLink);
+//            cols2.textContent = array[i].total_votes;
+//            cols3.textContent = array[i].votes_with_party_pct + "%";
+//            row.appendChild(cols1);
+//            row.appendChild(cols2);
+//            row.appendChild(cols3);
+//            body.appendChild(row);
+//        }
+//    }
 
-    function tableFunctionBodyLoyal(array,id){
-        var senateData = document.getElementById(id);
-        var body = document.createElement("tBody");
-        body.setAttribute("id", "tBody");
-        senateData.appendChild(body);
-        for(i = 0; i< array.length; i++){
-            var row = document.createElement("tr");
-            var cols1 = document.createElement("td");
-            var cols2 = document.createElement("td");
-            var cols3 = document.createElement("td");
-            var middleName = array[i].middle_name;
-            if(middleName == null){middleName = ""};
-            var name = array[i].first_name + array[i].middle_name  + " " + array[i].last_name;
-            var nameLink = document.createElement("a");
-            nameLink.setAttribute("href", array[i].url);
-            nameLink.textContent = name;
-            cols1.appendChild(nameLink);
-            cols2.textContent = array[i].total_votes;
-            cols3.textContent = array[i].votes_with_party_pct + "%";
-            row.appendChild(cols1);
-            row.appendChild(cols2);
-            row.appendChild(cols3);
-            body.appendChild(row);
-        }
-    }
-    tableFunctionBodyLoyal(statistics.Members_Missed_Least_Votes, "least-loyal");
-    tableFunctionBodyLoyal(statistics.Members_Missed_Most_Votes, "most-loyal");
     
-}else if((window.location.pathname == '/senate-attendance.html')||(window.location.pathname == '/house-attendance.html')){
+
 
 //TABLAS PARA ATTENDANCE:
 function tableFunctionHeadAttendance(id){
@@ -284,8 +354,7 @@ function tableFunctionHeadAttendance(id){
     firstRow.appendChild(cols2th);
     firstRow.appendChild(cols3th);
 }
-tableFunctionHeadAttendance("most-engage");
-tableFunctionHeadAttendance("least-engage");
+
 
 function tableFunctionBodyAttendance(array,id){
     var senateData = document.getElementById(id);
@@ -312,6 +381,62 @@ function tableFunctionBodyAttendance(array,id){
         body.appendChild(row);
     }
 }
-tableFunctionBodyAttendance(statistics.Members_Missed_Least_Votes, "least-engage");
-tableFunctionBodyAttendance(statistics.Members_Missed_Most_Votes, "most-engage");
+
+
+  function tableFunctionHeadLoyal(id){
+        var table = document.getElementById(id);
+    //    var header = senateData.createTHead();
+    //    senateData.appendChild(header);
+        var firstRow = document.createElement("tr");
+        var cols1th = document.createElement("th");
+        var cols2th = document.createElement("th");
+        var cols3th = document.createElement("th");
+        cols1th.textContent ="Name";
+        cols2th.textContent ="Number Party Votes";
+        cols3th.textContent ="% Party Votes";
+        table.appendChild(firstRow);
+        firstRow.appendChild(cols1th);
+        firstRow.appendChild(cols2th);
+        firstRow.appendChild(cols3th);
+    }
+
+
+    function tableFunctionBodyLoyal(array,id){
+        var senateData = document.getElementById(id);
+        var body = document.createElement("tBody");
+        body.setAttribute("id", "tBody");
+        senateData.appendChild(body);
+        for(i = 0; i< array.length; i++){
+            var row = document.createElement("tr");
+            var cols1 = document.createElement("td");
+            var cols2 = document.createElement("td");
+            var cols3 = document.createElement("td");
+            var middleName = array[i].middle_name;
+            if(middleName == null){middleName = ""};
+            var name = array[i].first_name + array[i].middle_name  + " " + array[i].last_name;
+            var nameLink = document.createElement("a");
+            nameLink.setAttribute("href", array[i].url);
+            nameLink.textContent = name;
+            cols1.appendChild(nameLink);
+            cols2.textContent = array[i].total_votes;
+            cols3.textContent = array[i].votes_with_party_pct + "%";
+            row.appendChild(cols1);
+            row.appendChild(cols2);
+            row.appendChild(cols3);
+            body.appendChild(row);
+        }
+    }
+
+function callMyFunctionTable(){
+    if((window.location.pathname == '/senate-party-loyalty.html')||(window.location.pathname == '/house-party-loyalty.html')){
+        tableFunctionHeadLoyal("most-loyal");
+        tableFunctionHeadLoyal("least-loyal");
+        tableFunctionBodyLoyal(statistics.Members_Missed_Least_Votes, "least-loyal");
+        tableFunctionBodyLoyal(statistics.Members_Missed_Most_Votes, "most-loyal");;
+    }else if (((window.location.pathname == '/senate-attendance.html')||(window.location.pathname == '/house-attendance.html')) ){
+        tableFunctionHeadAttendance("most-engage");
+        tableFunctionHeadAttendance("least-engage");
+        tableFunctionBodyAttendance(statistics.Members_Missed_Least_Votes, "least-engage");
+        tableFunctionBodyAttendance(statistics.Members_Missed_Most_Votes, "most-engage");
+    }
 }
