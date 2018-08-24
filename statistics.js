@@ -2,6 +2,17 @@
 var data;
 var membersAll;
 
+var dem = 0;
+var rep = 0;
+var ind = 0;
+
+var demVotes;
+var repVotes;
+
+var arrayVotesParty = [];
+
+var mostArray = [];
+var leastArray = [];
 
 if ((window.location.pathname == '/senate-party-loyalty.html')||(window.location.pathname == '/senate-attendance.html')){
 fetch("https://api.propublica.org/congress/v1/113/senate/members.json", {
@@ -22,7 +33,7 @@ fetch("https://api.propublica.org/congress/v1/113/senate/members.json", {
    // equals to .success in JQuery Ajax call;
     data = json;
     membersAll = data.results[0].members;
-    console.log(membersAll);
+    
     numberOfMembersEachParty();
     votesWithPartyAvarage();
     createArrayVotesParty(membersAll);
@@ -32,14 +43,14 @@ fetch("https://api.propublica.org/congress/v1/113/senate/members.json", {
     membersVoteTheirParty(membersAll,sortByLeast(),leastArray);
     tableFunctionHeadSenateGlance();
     tableFunctionBodySenateGlance();
-    tableFunctionHeadLoyal("most-loyal");
-    tableFunctionHeadLoyal("least-loyal");
-    tableFunctionBodyLoyal(statistics.Members_Missed_Least_Votes, "least-loyal");
-    tableFunctionBodyLoyal(statistics.Members_Missed_Most_Votes, "most-loyal");
-    tableFunctionHeadAttendance("most-engage");
-    tableFunctionHeadAttendance("least-engage");
-    tableFunctionBodyAttendance(statistics.Members_Missed_Least_Votes, "least-engage");
-    tableFunctionBodyAttendance(statistics.Members_Missed_Most_Votes, "most-engage");
+//    tableFunctionHeadLoyal("most-loyal");
+//    tableFunctionHeadLoyal("least-loyal");
+//    tableFunctionBodyLoyal(statistics.Members_Missed_Least_Votes, "least-loyal");
+//    tableFunctionBodyLoyal(statistics.Members_Missed_Most_Votes, "most-loyal");
+//    tableFunctionHeadAttendance("most-engage");
+//    tableFunctionHeadAttendance("least-engage");
+//    tableFunctionBodyAttendance(statistics.Members_Missed_Least_Votes, "least-engage");
+//    tableFunctionBodyAttendance(statistics.Members_Missed_Most_Votes, "most-engage");
     callMyFunctionTable();
   
 }).catch(function (error) {
@@ -61,18 +72,29 @@ fetch("https://api.propublica.org/congress/v1/113/house/members.json", {
    }
    throw new Error(response.statusText);
 }).then(function (json) {
-   data2 = json;
-console.log(data2);
-  
+    data = json;
+    membersAll = data.results[0].members;
+    
+    numberOfMembersEachParty();
+    votesWithPartyAvarage(membersAll);
+    createArrayVotesParty(membersAll);
+    sortByLeast();
+    sortByMost();
+    membersVoteTheirParty(membersAll,sortByMost(),mostArray);
+    membersVoteTheirParty(membersAll,sortByLeast(),leastArray);
+    tableFunctionHeadSenateGlance();
+    tableFunctionBodySenateGlance();
+    callMyFunctionTable();
+
 }).catch(function (error) {
    console.log("Request failed: " + error.message);
 });
 }
 
-
-var dem = 0;
-var rep = 0;
-var ind = 0;
+function makeLoader(){
+    var div = document.createElement("div");
+    div.setAttribute("class", loader);
+}
 
 
 function numberOfMembersEachParty(){
@@ -85,6 +107,9 @@ function numberOfMembersEachParty(){
             ind++;
         }
     }
+    statistics["Number_Of_Democrats"] = dem;
+    statistics["Number_Of_Republicans"] = rep;
+    statistics["Number_Of_Independents"] = ind;
     console.log(dem);
     console.log(rep);
     console.log(ind);
@@ -92,8 +117,6 @@ function numberOfMembersEachParty(){
 
 
 
-var demVotes;
-var repVotes;
 function votesWithPartyAvarage(){
     var democrats = [];
     var republicans = [];
@@ -108,6 +131,8 @@ function votesWithPartyAvarage(){
     repVotes = (republicans.reduce(function(a, b) { return a + b; }, 0))/republicans.length;
     demVotes = demVotes.toFixed(2);
     repVotes = repVotes.toFixed(2);
+    statistics["Democrats_Average_Voting"] = demVotes;
+    statistics["Republicans_Average_Voting"] = repVotes;
     console.log(demVotes);
     console.log(repVotes);
 }
@@ -154,7 +179,6 @@ function membersLeastVoteTheirParty(){
 }*/
 
 
-var arrayVotesParty = [];
 
 function createArrayVotesParty(array){
     for(var i = 0; i < array.length; i++){
@@ -173,8 +197,6 @@ function sortByMost(){
     return arrayVotesParty;
 }
 
-var mostArray = [];
-var leastArray = [];
 
 function membersVoteTheirParty(array,array2,array3){
     var tenPctArray = [];
@@ -258,6 +280,7 @@ function tableFunctionBodySenateGlance(){
     var body = document.createElement("tBody");
     body.setAttribute("id", "tBody");
     senateData.appendChild(body);
+    console.log(statistics.Number_Of_Independents)
     for(i = 0; i< 4; i++){
         var row = document.createElement("tr");
         var cols1 = document.createElement("td");
@@ -368,7 +391,7 @@ function tableFunctionBodyAttendance(array,id){
         var cols3 = document.createElement("td");
         var middleName = array[i].middle_name;
         if(middleName == null){middleName = ""};
-        var name = array[i].first_name + array[i].middle_name  + " " + array[i].last_name;
+        var name = array[i].first_name + middleName  + " " + array[i].last_name;
         var nameLink = document.createElement("a");
         nameLink.setAttribute("href", array[i].url);
         nameLink.textContent = name;
@@ -412,8 +435,8 @@ function tableFunctionBodyAttendance(array,id){
             var cols2 = document.createElement("td");
             var cols3 = document.createElement("td");
             var middleName = array[i].middle_name;
-            if(middleName == null){middleName = ""};
-            var name = array[i].first_name + array[i].middle_name  + " " + array[i].last_name;
+            if(middleName == null){middleName = " "};
+            var name = array[i].first_name + middleName  + " " + array[i].last_name;
             var nameLink = document.createElement("a");
             nameLink.setAttribute("href", array[i].url);
             nameLink.textContent = name;

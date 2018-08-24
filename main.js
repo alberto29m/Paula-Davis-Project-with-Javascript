@@ -1,4 +1,73 @@
-var allMembers = data.results[0].members;
+var allMembers;
+
+
+if (document.getElementById("senate") != null){
+    fetch("https://api.propublica.org/congress/v1/113/senate/members.json", {
+
+       method: "GET",
+       headers: {
+           'X-API-Key': 'DHbvC92HKDPm4s3ZZj6QFYhPB4gm4bqvqJlGFEv5'
+       }
+    }).then(function (response) {
+
+       if (response.ok) {
+           // add a new promise to the chain
+           return response.json();
+       }
+       // signal a server error to the chain
+       throw new Error(response.statusText);
+    }).then(function (json) {
+       // equals to .success in JQuery Ajax call;
+        data = json;
+        allMembers = data.results[0].members;
+
+        tableFunctionHead();
+        tableFunctionBody(allMembers);
+        createDropdownMenu();
+        document.getElementById("dropdownMenu").onchange = function () {
+        updateTable();};
+        document.getElementById("checkboxes").onchange = function () {
+        updateTable();};
+
+    }).catch(function (error) {
+       // called when an error occurs anywhere in the chain
+       console.log("Request failed: " + error.message);
+    });
+
+}else if(document.getElementById("house")!= null){
+
+    fetch("https://api.propublica.org/congress/v1/113/house/members.json", {
+
+       method: "GET",
+       headers: {
+           'X-API-Key': 'DHbvC92HKDPm4s3ZZj6QFYhPB4gm4bqvqJlGFEv5'
+       }
+    }).then(function (response) {
+
+       if (response.ok) {
+           return response.json();
+       }
+       throw new Error(response.statusText);
+    }).then(function (json) {
+        data = json;
+        allMembers = data.results[0].members;
+
+        tableFunctionHead();
+        tableFunctionBody(allMembers);
+        createDropdownMenu();
+        document.getElementById("dropdownMenu").onchange = function () {
+        updateTable();};
+        document.getElementById("checkboxes").onchange = function () {
+        updateTable();};
+
+
+    }).catch(function (error) {
+       console.log("Request failed: " + error.message);
+    });
+}
+
+
+
 /*
 Así hice la función en primera instancia, de forma limpia. Después quise simplificar el código, pero funciona igual.
 function tableFunction(members){
@@ -40,8 +109,9 @@ function tableFunction(members){
 
 tableFunction(members);*/
 
-tableFunctionBody(allMembers);
+//tableFunctionBody(allMembers);
 function tableFunctionBody(members){
+    console.log(1)
     var senateData = document.getElementById("senate-data");
     var body = document.createElement("tBody");
     body.setAttribute("id", "tBody");
@@ -50,7 +120,7 @@ function tableFunctionBody(members){
         var row = document.createElement("tr");
         var middleName = members[i].middle_name;
         if(middleName == null){middleName = ""};
-        var name = members[i].first_name + middleName  + members[i].last_name;
+        var name = members[i].first_name + middleName+ " " + members[i].last_name;
         var cols1 = document.createElement("td");
         var cols2 = document.createElement("td");
         var cols3 = document.createElement("td");
@@ -98,7 +168,7 @@ function tableFunctionHead(){
     firstRow.appendChild(cols5th);
 }
 
- tableFunctionHead()
+// tableFunctionHead()
 
 function filterByParty(){
     var checkedBoxes = document.querySelectorAll('input[name=myCheck]:checked');
@@ -124,15 +194,16 @@ function filterByParty(){
     }
     tableFunctionBody(newMembersArray);
 }
-document.getElementById("dropdownMenu").onchange = function () {
-    updateTable();
-};
-
-document.getElementById("checkboxes").onchange = function () {
-    updateTable();
-};
+//document.getElementById("dropdownMenu").onchange = function () {
+//    updateTable();
+//};
+//
+//document.getElementById("checkboxes").onchange = function () {
+//    updateTable();
+//};
 
 function updateTable(){
+    console.log("hola")
     removeTable();
     filterByParty();
 }
@@ -164,7 +235,7 @@ function createDropdownMenu(){
         option.setAttribute("value", options1[i]);
     }
 }
-createDropdownMenu();
+//createDropdownMenu();
 
 /*function filterByDropdownMenu(){
     var newMembersState = [];
