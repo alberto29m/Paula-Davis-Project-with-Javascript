@@ -1,4 +1,16 @@
 var allMembers;
+new Vue({
+  el: '#senate-data',
+  data: {
+        allMembers: [],
+        
+  },methods:{
+      
+        
+        }
+        
+        }
+})
 
 
 if (document.getElementById("senate") != null){
@@ -110,6 +122,10 @@ function tableFunction(members){
 tableFunction(members);*/
 
 //tableFunctionBody(allMembers);
+
+
+
+
 function tableFunctionBody(members){
     console.log(1)
     var senateData = document.getElementById("senate-data");
@@ -254,5 +270,20 @@ function createDropdownMenu(){
 }
 
 filterByDropdownMenu();*/
+
+
+var buttonMoreLess = new Vue({
+  el: '#buttonMoreLess',
+  data: {
+    message: 'Read more'
+  },
+  methods: {
+    newMessage: function (message) {
+      this.message = "Read less";
+
+    }
+  }
+})
+
 
 

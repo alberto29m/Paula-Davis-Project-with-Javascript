@@ -11,10 +11,14 @@
     
     <body>
         <div class = "container">
-         <div>
-                <img src = "Images/logo.jpg" class="img-rounded" alt = "TGIF_logo">
+         <div class = "row">
+             <div class = "col-sm-6">
+                    <img src = "Images/logo.jpg" class="img-rounded" alt = "TGIF_logo">
+             </div>
+             <div class = "col-sm-6" id= "email">
+                    <a href="mailto:info@tgif.net">info@tgif.net</a>
+             </div>
          </div>
-         <div class = "panel panel-default"> 
                 <nav class="navbar navbar-default">
                   <div class = "container-fluid">
                     <div class="navbar-header">
@@ -42,7 +46,6 @@
                     </div>
                   </div>
                 </nav>
-             </div>
   
 
         <div class = "panel panel-default">
@@ -54,7 +57,7 @@
     	            </div>
                     <div  class = "col-sm-6">
                         <h2>Senate at a glance</h2>
-                        <table id = "glance">
+                        <table id = "glance" class="table table-bordered">
                             
                         </table>
                 </div>
@@ -62,13 +65,13 @@
                 <div class = "row">
                     <div  class = "col-sm-6">
                         <h2>Least Loyal (Bottom 10% of Party)</h2>
-                        <table id = "least-loyal">
+                        <table id = "least-loyal" class = "table table-condensed">
                             
                         </table>
                     </div>
                     <div  class = "col-sm-6">
                             <h2>Most Loyal (Top 10% of Party)</h2>
-                            <table id = "most-loyal">
+                            <table id = "most-loyal" class = "table table-condensed">
                                 
                             </table>
                     </div>

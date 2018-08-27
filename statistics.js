@@ -15,80 +15,80 @@ var mostArray = [];
 var leastArray = [];
 
 if ((window.location.pathname == '/senate-party-loyalty.html')||(window.location.pathname == '/senate-attendance.html')){
-fetch("https://api.propublica.org/congress/v1/113/senate/members.json", {
- 
-   method: "GET",
-   headers: {
-       'X-API-Key': 'DHbvC92HKDPm4s3ZZj6QFYhPB4gm4bqvqJlGFEv5'
-   }
-}).then(function (response) {
- 
-   if (response.ok) {
-       // add a new promise to the chain
-       return response.json();
-   }
-   // signal a server error to the chain
-   throw new Error(response.statusText);
-}).then(function (json) {
-   // equals to .success in JQuery Ajax call;
-    data = json;
-    membersAll = data.results[0].members;
-    
-    numberOfMembersEachParty();
-    votesWithPartyAvarage();
-    createArrayVotesParty(membersAll);
-    sortByLeast();
-    sortByMost();
-    membersVoteTheirParty(membersAll,sortByMost(),mostArray);
-    membersVoteTheirParty(membersAll,sortByLeast(),leastArray);
-    tableFunctionHeadSenateGlance();
-    tableFunctionBodySenateGlance();
-//    tableFunctionHeadLoyal("most-loyal");
-//    tableFunctionHeadLoyal("least-loyal");
-//    tableFunctionBodyLoyal(statistics.Members_Missed_Least_Votes, "least-loyal");
-//    tableFunctionBodyLoyal(statistics.Members_Missed_Most_Votes, "most-loyal");
-//    tableFunctionHeadAttendance("most-engage");
-//    tableFunctionHeadAttendance("least-engage");
-//    tableFunctionBodyAttendance(statistics.Members_Missed_Least_Votes, "least-engage");
-//    tableFunctionBodyAttendance(statistics.Members_Missed_Most_Votes, "most-engage");
-    callMyFunctionTable();
+    fetch("https://api.propublica.org/congress/v1/113/senate/members.json", {
+
+       method: "GET",
+       headers: {
+           'X-API-Key': 'DHbvC92HKDPm4s3ZZj6QFYhPB4gm4bqvqJlGFEv5'
+       }
+    }).then(function (response) {
+
+       if (response.ok) {
+           // add a new promise to the chain
+           return response.json();
+       }
+       // signal a server error to the chain
+       throw new Error(response.statusText);
+    }).then(function (json) {
+       // equals to .success in JQuery Ajax call;
+        data = json;
+        membersAll = data.results[0].members;
+
+        numberOfMembersEachParty();
+        votesWithPartyAvarage();
+        createArrayVotesParty(membersAll);
+        sortByLeast();
+        sortByMost();
+        membersVoteTheirParty(membersAll,sortByMost(),mostArray);
+        membersVoteTheirParty(membersAll,sortByLeast(),leastArray);
+        tableFunctionHeadSenateGlance();
+        tableFunctionBodySenateGlance();
+    //    tableFunctionHeadLoyal("most-loyal");
+    //    tableFunctionHeadLoyal("least-loyal");
+    //    tableFunctionBodyLoyal(statistics.Members_Missed_Least_Votes, "least-loyal");
+    //    tableFunctionBodyLoyal(statistics.Members_Missed_Most_Votes, "most-loyal");
+    //    tableFunctionHeadAttendance("most-engage");
+    //    tableFunctionHeadAttendance("least-engage");
+    //    tableFunctionBodyAttendance(statistics.Members_Missed_Least_Votes, "least-engage");
+    //    tableFunctionBodyAttendance(statistics.Members_Missed_Most_Votes, "most-engage");
+        callMyFunctionTable();
   
-}).catch(function (error) {
-   // called when an error occurs anywhere in the chain
-   console.log("Request failed: " + error.message);
-});
+    }).catch(function (error) {
+       // called when an error occurs anywhere in the chain
+       console.log("Request failed: " + error.message);
+    });
 }else if ((window.location.pathname == '/house-attendance.html')||(window.location.pathname == '/house-party-loyalty.html')){
 
-fetch("https://api.propublica.org/congress/v1/113/house/members.json", {
- 
-   method: "GET",
-   headers: {
-       'X-API-Key': 'DHbvC92HKDPm4s3ZZj6QFYhPB4gm4bqvqJlGFEv5'
-   }
-}).then(function (response) {
- 
-   if (response.ok) {
-       return response.json();
-   }
-   throw new Error(response.statusText);
-}).then(function (json) {
-    data = json;
-    membersAll = data.results[0].members;
-    
-    numberOfMembersEachParty();
-    votesWithPartyAvarage(membersAll);
-    createArrayVotesParty(membersAll);
-    sortByLeast();
-    sortByMost();
-    membersVoteTheirParty(membersAll,sortByMost(),mostArray);
-    membersVoteTheirParty(membersAll,sortByLeast(),leastArray);
-    tableFunctionHeadSenateGlance();
-    tableFunctionBodySenateGlance();
-    callMyFunctionTable();
+    fetch("https://api.propublica.org/congress/v1/113/house/members.json", {
 
-}).catch(function (error) {
-   console.log("Request failed: " + error.message);
-});
+       method: "GET",
+       headers: {
+           'X-API-Key': 'DHbvC92HKDPm4s3ZZj6QFYhPB4gm4bqvqJlGFEv5'
+       }
+    }).then(function (response) {
+
+       if (response.ok) {
+           return response.json();
+       }
+       throw new Error(response.statusText);
+    }).then(function (json) {
+        data = json;
+        membersAll = data.results[0].members;
+
+        numberOfMembersEachParty();
+        votesWithPartyAvarage(membersAll);
+        createArrayVotesParty(membersAll);
+        sortByLeast();
+        sortByMost();
+        membersVoteTheirParty(membersAll,sortByMost(),mostArray);
+        membersVoteTheirParty(membersAll,sortByLeast(),leastArray);
+        tableFunctionHeadSenateGlance();
+        tableFunctionBodySenateGlance();
+        callMyFunctionTable();
+
+    }).catch(function (error) {
+       console.log("Request failed: " + error.message);
+    });
 }
 
 function makeLoader(){
