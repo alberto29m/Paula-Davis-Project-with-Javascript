@@ -11,6 +11,7 @@
     </head>
     
     <body>
+        <div id = "appsenatehouse">
         <div class = "container" id = "house">
             <div class = "row">
              <div class = "col-sm-6">
@@ -61,15 +62,34 @@
                     <select class = "dropdownMenu" id="dropdownMenu" class="col-sm-2">
                         <option value="all">All</option>
                     </select>
-    	            <table class="table table-striped" id = "senate-data">    
+    	            <table class="table table-striped" >
+                        <thead>
+                            <tr>
+                                <th>Senator's Name</th>
+                                <th>Party Affilication</th>
+                                <th>State</th>
+                                <th>Seniority</th>
+                                <th>Votes Percentage</th>
+                            </tr>
+                        </thead>
+                        <tbody id = "tBody">
+                            <tr v-for= "member in allMembers2">
+                                <td><a :href="member.url">{{fullName(member)}}</a></td>
+                                <td >{{member.party}} </td>
+                                <td>{{member.state}} </td>
+                                <td>{{member.seniority}} </td>
+                                <td>{{member.votes_with_party_pct}} </td>
+                            </tr>
+                        </tbody>
                     </table>
 	           </div>
                <div class = "panel-footer">
                     <p>©2016 TGIF | All Right Reservered</p>
                </div>
             </div>
-<!--        <script src = "house.js"></script>-->
-        <script src = "main.js"></script>
         </div>
+        </div>
+<!--        <script src = "house.js"></script>-->
+        <script src = "Vuemain.js"></script>
     </body>
 </html>

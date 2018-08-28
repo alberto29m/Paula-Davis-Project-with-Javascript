@@ -1,16 +1,4 @@
-var allMembers;
-new Vue({
-  el: '#senate-data',
-  data: {
-        allMembers: [],
-        
-  },methods:{
-      
-        
-        }
-        
-        }
-})
+
 
 
 if (document.getElementById("senate") != null){
@@ -80,6 +68,7 @@ if (document.getElementById("senate") != null){
 
 
 
+
 /*
 Así hice la función en primera instancia, de forma limpia. Después quise simplificar el código, pero funciona igual.
 function tableFunction(members){
@@ -119,9 +108,10 @@ function tableFunction(members){
     }
 }  
 
-tableFunction(members);*/
+tableFunction(members);
+*/
 
-//tableFunctionBody(allMembers);
+tableFunctionBody(allMembers);
 
 
 
@@ -158,7 +148,7 @@ function tableFunctionBody(members){
         body.appendChild(row);
     }
 }
-//tableFunction2(members);
+tableFunction2(members);
 
 
 function tableFunctionHead(){
@@ -184,7 +174,7 @@ function tableFunctionHead(){
     firstRow.appendChild(cols5th);
 }
 
-// tableFunctionHead()
+ tableFunctionHead()
 
 function filterByParty(){
     var checkedBoxes = document.querySelectorAll('input[name=myCheck]:checked');
@@ -210,16 +200,15 @@ function filterByParty(){
     }
     tableFunctionBody(newMembersArray);
 }
-//document.getElementById("dropdownMenu").onchange = function () {
-//    updateTable();
-//};
-//
-//document.getElementById("checkboxes").onchange = function () {
-//    updateTable();
-//};
+document.getElementById("dropdownMenu").onchange = function () {
+    updateTable();
+};
+
+document.getElementById("checkboxes").onchange = function () {
+    updateTable();
+};
 
 function updateTable(){
-    console.log("hola")
     removeTable();
     filterByParty();
 }
@@ -251,9 +240,9 @@ function createDropdownMenu(){
         option.setAttribute("value", options1[i]);
     }
 }
-//createDropdownMenu();
+createDropdownMenu();
 
-/*function filterByDropdownMenu(){
+function filterByDropdownMenu(){
     var newMembersState = [];
     var options1 = makeNewArray();
     var select = document.getElementById("dropdownMenu");
@@ -269,21 +258,9 @@ function createDropdownMenu(){
     tableFunctionBody(newMembersState);
 }
 
-filterByDropdownMenu();*/
+//filterByDropdownMenu();
 
 
-var buttonMoreLess = new Vue({
-  el: '#buttonMoreLess',
-  data: {
-    message: 'Read more'
-  },
-  methods: {
-    newMessage: function (message) {
-      this.message = "Read less";
-
-    }
-  }
-})
 
 
 

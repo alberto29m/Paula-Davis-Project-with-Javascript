@@ -7,10 +7,10 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     </head>
     
     <body>
+        <div id="appsenatehouse">
         <div class= "container" id = "senate">
             <div class = "row">
              <div class = "col-sm-6">
@@ -57,10 +57,10 @@
                         <input checked type="checkbox" value="D" name="myCheck" id="CheckD">Democrat
                         <input checked type="checkbox" value="I" name="myCheck" id="CheckI">Independent
                     </form>
-                    <select class = "dropdownMenu" id="dropdownMenu" class="col-sm-2">
+                    <select class = "dropdownMenu" id="dropdownMenu" @change="filterByDropdownMenu" class="col-sm-2">
                         <option value="all">All</option>
                     </select>
-    	            <table class="table table-striped" id = "senate-data">
+    	            <table class="table table-striped" >
                         <thead>
                             <tr>
                                 <th>Senator's Name</th>
@@ -70,15 +70,15 @@
                                 <th>Votes Percentage</th>
                             </tr>
                         </thead>
-                        <tbody v-for= allMembers>
-                            <tr>
-                                <td><a :href={{allMembers.name}}></a></td>
-                                <td>{{allMembers.party}} </td>
-                                <td>{{allMembers.state}} </td>
-                                <td>{{allMembers.seniority}} </td>
-                                <td>{{allMembers.vts_per_pct}} </td>
+                        <tbody id = "tBody">
+                            <tr v-for= "member in allMembers2">
+                                <td><a :href="member.url">{{fullName(member)}}</a></td>
+                                <td >{{member.party}} </td>
+                                <td>{{member.state}} </td>
+                                <td>{{member.seniority}} </td>
+                                <td>{{member.votes_with_party_pct}} </td>
                             </tr>
-                        
+                        </tbody>
                     </table>
     	       </div>
                <div class = "panel-footer">
@@ -86,7 +86,10 @@
                </div> 
             </div>
         </div>
+        </div>
 <!--        <script src = "senate.js"></script> -->
-        <script src = "main.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!--        <script src = "main.js"></script>-->
+        <script src = "Vuemain.js"></script>
     </body>
 </html>
