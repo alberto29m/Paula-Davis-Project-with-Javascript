@@ -34,7 +34,7 @@ var app = new Vue({
            
             app.allMembers = json.results[0].members;
             app.allMembers2 = json.results[0].members;
-            console.log(app.allMembers)
+            
             document.getElementById("checkboxes").onchange = function () {
             app.checkboxesFilter();};
 
@@ -157,19 +157,7 @@ var app = new Vue({
         
     }
 })
-//var app2 = new Vue({
-//  el: '#app',
-//  data: {
-//    message:"Read more",
-//  },
-//  methods: {
-//    newMessage: function () {
-//        if(this.message == "Read more"){
-//            this.message = "Read less";
-//        }else if (this.message == "Read less"){
-//            this.message = "Read more";
-//      }
-//
-//    }
-//  }
-//})
+var containerLoader = document.getElementById("containerLoader");
+setTimeout(function(){
+    containerLoader.classList.add("cerrar");
+},2000);

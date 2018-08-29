@@ -91,10 +91,10 @@ if ((window.location.pathname == '/senate-party-loyalty.html')||(window.location
     });
 }
 
-function makeLoader(){
-    var div = document.createElement("div");
-    div.setAttribute("class", loader);
-}
+//function makeLoader(){
+//    var div = document.createElement("div");
+//    div.setAttribute("class", loader);
+//}
 
 
 function numberOfMembersEachParty(){

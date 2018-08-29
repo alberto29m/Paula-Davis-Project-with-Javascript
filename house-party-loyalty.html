@@ -10,7 +10,12 @@
     </head>
     
     <body>
-        <div class = "container">
+        <div class = "containerLoader" id="containerLoader">
+            <div class= "preloader">
+                <p>Loading...</p>
+            </div>
+        </div>
+        <div class = "container" id = "attendanceLoyalty">
          <div class = "row">
              <div class = "col-sm-6">
                     <img src = "Images/logo.jpg" class="img-rounded" alt = "TGIF_logo">
@@ -57,21 +62,75 @@
     	            <div  class = "col-sm-6">
                         <h2>House at a glance</h2>
                         <table id = "glance" class="table table-bordered">
-                
+                            <thead>
+                                <tr>
+                                    <th>Party</th>
+                                    <th>Number of Reps</th>
+                                    <th>% Voted with Party</th>
+                                </tr>
+                            </thead>
+                            <tbody id = "tBody">
+                                <tr>
+                                    <td>Democrats </td>
+                                    <td >{{dem}} </td>
+                                    <td>{{demVotes}} </td>
+                                </tr>
+                                <tr>
+                                    <td>Republicans </td>
+                                    <td >{{rep}} </td>
+                                    <td>{{repVotes}} </td>
+                                </tr>
+                                <tr>
+                                    <td>Independents </td>
+                                    <td >{{ind}} </td>
+                                    <td>0%</td>
+                                </tr>
+                                <tr>
+                                    <td>Total </td>
+                                    <td >{{dem+rep+ind}} </td>
+                                    <td> </td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
                 <div class = "row">
                     <div  class = "col-sm-6">
                         <h2>Least Loyal (Bottom 10% of Party)</h2>
-                        <table id = "least-loyal" class = "table table-condensed">
-                    
+                        <table id = "least-loyal" class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Number Party Votes</th>
+                                    <th>% Party Votes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for= "member in leastArray">
+                                    <td><a :href="member.url">{{fullName(member)}}</a></td>
+                                    <td>{{member.total_votes}} </td>
+                                    <td>{{member.votes_with_party_pct}} % </td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                     <div  class = "col-sm-6">
                         <h2>Most Loyal (Top 10% of Party)</h2>
                         <table id = "most-loyal" class = "table table-condensed">
-                
+                                <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Number Party Votes</th>
+                                    <th>% Party Votes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for= "member in mostArray">
+                                    <td><a :href="member.url">{{fullName(member)}}</a></td>
+                                    <td>{{member.total_votes}} </td>
+                                    <td>{{member.votes_with_party_pct}} % </td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -80,8 +139,10 @@
             <p>©2016 TGIF | All Right Reservered</p>     
         </div>
     	</div>
-    	</div>
+        </div>
 <!--        <script src="house.js"></script>-->
-        <script src = "statistics.js"></script>
+<!--        <script src = "statistics.js"></script>-->
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src= "vue-statistics.js"></script>
     </body>
 </html>
