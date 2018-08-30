@@ -31,7 +31,7 @@ var app = new Vue({
            throw new Error(response.statusText);
         }).then(function (json) {
            // equals to .success in JQuery Ajax call;
-           
+            app.loader();
             app.allMembers = json.results[0].members;
             app.allMembers2 = json.results[0].members;
             
@@ -62,9 +62,11 @@ var app = new Vue({
            }
            throw new Error(response.statusText);
         }).then(function (json) {
+            app.loader();
+            
             app.allMembers = json.results[0].members;
             app.allMembers2 = json.results[0].members;
-            console.log(app.allMembers)
+            
             document.getElementById("checkboxes").onchange = function () {
                 app.checkboxesFilter();};
             app.createDropdownMenu();
@@ -153,11 +155,13 @@ var app = new Vue({
         app.allMembers2 = app.newMembersState;
         console.log(app.newMembersState)
         return app.newMembersState;
+    },
+    loader: function(){
+        var containerLoader = document.getElementById("containerLoader");
+//        setTimeout(function(){
+            containerLoader.classList.add("cerrar");
+//        },);    
     }
         
     }
 })
-var containerLoader = document.getElementById("containerLoader");
-setTimeout(function(){
-    containerLoader.classList.add("cerrar");
-},2000);

@@ -277,9 +277,4 @@ var app = new Vue({
   }
 })
 
-var containerLoader = document.getElementById("containerLoader");
-setTimeout(function(){
-    containerLoader.classList.add("cerrar");
-},2000);
-
 

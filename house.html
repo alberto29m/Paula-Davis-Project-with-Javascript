@@ -11,13 +11,13 @@
     </head>
     
     <body>
+        <div id = "appsenatehouse">
+        <div class = "container" id = "house">
         <div class = "containerLoader" id="containerLoader">
             <div class= "preloader">
                 <p>Loading...</p>
             </div>
         </div>
-        <div id = "appsenatehouse">
-        <div class = "container" id = "house">
             <div class = "row">
              <div class = "col-sm-6">
                     <img src = "Images/logo.jpg" class="img-rounded" alt = "TGIF_logo">
@@ -87,6 +87,7 @@
                             </tr>
                         </tbody>
                     </table>
+                    <div id = "messageNoData" v-if ="allMembers2.length === 0"><h3>NO DATA RESULTS</h3></div>
 	           </div>
                <div class = "panel-footer">
                     <p>©2016 TGIF | All Right Reservered</p>

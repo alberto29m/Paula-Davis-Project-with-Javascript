@@ -9,11 +9,12 @@
 .containerLoader{ 
     position:absolute;
     top: 0;
-    background: #222;
+    left:0;
+    background: #222222bf;
     color:#fff;
     width: 100%;
     min-height: 100vh;
-    
+    min-width: 100vh;
     display: flex;
     z-index: 10000;
 }
@@ -60,4 +61,8 @@ preloader:before{
     justify-content: flex-end;
     align-items:flex-end;
     display: flex; 
+}
+#messageNoData{
+    justify-content: center;
+    display:flex;
 }

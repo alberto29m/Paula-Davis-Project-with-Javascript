@@ -12,9 +12,12 @@ var app = new Vue({
         repVotes: 0,
 
         arrayVotesParty : [],
+        arrayVotesMissed: [],
 
         mostArray : [],
-        leastArray : []
+        mostMissedArray : [],
+        leastArray : [],
+        leastMissedArray : []
     },
     created: function() {
         this.getData();
@@ -37,16 +40,23 @@ var app = new Vue({
                    // signal a server error to the chain
                    throw new Error(response.statusText);
                 }).then(function (json) {
+                    app.loader();
                    // equals to .success in JQuery Ajax call;
                     app.membersAll = json.results[0].members;
-                
+                    
+            
                     app.numberOfMembersEachParty();
                     app.votesWithPartyAvarage();
-                    app.createArrayVotesParty(app.membersAll);
                     
-                    app.membersVoteTheirParty(app.membersAll, app.sortByMost(), app.mostArray);
+                    app.createArrayVotesParty(app.membersAll);
+                    app.createArrayVotesMissed(app.membersAll);
+                    
+                    app.membersVoteTheirParty(app.membersAll, app.sortByLeast(), app.mostArray,"votes_with_party_pct");
+                    app.membersVoteTheirParty(app.membersAll,app.sortByMost(),app.leastArray, "votes_with_party_pct");
+                    
+                    app.membersVoteTheirParty(app.membersAll, app.sortByLeastMissed(), app.mostMissedArray, "missed_votes_pct");
+                    app.membersVoteTheirParty(app.membersAll,app.sortByMostMissed(),app.leastMissedArray,"missed_votes_pct");
 
-                    app.membersVoteTheirParty(app.membersAll,app.sortByLeast(),app.leastArray);
 
 
                 }).catch(function (error) {
@@ -68,15 +78,22 @@ var app = new Vue({
                    }
                    throw new Error(response.statusText);
                 }).then(function (json) {
+                    app.loader();
+                    
                     app.membersAll = json.results[0].members;
                 
                     app.numberOfMembersEachParty();
                     app.votesWithPartyAvarage();
-                    app.createArrayVotesParty(app.membersAll);
                     
-                    app.membersVoteTheirParty(app.membersAll, app.sortByMost(), app.mostArray);
+                    app.createArrayVotesParty(app.membersAll);
+                    app.createArrayVotesMissed(app.membersAll);
+                    
+                    app.membersVoteTheirParty(app.membersAll, app.sortByLeast(), app.mostArray,"votes_with_party_pct");
+                    app.membersVoteTheirParty(app.membersAll,app.sortByMost(),app.leastArray,"votes_with_party_pct");
+                    
+                    app.membersVoteTheirParty(app.membersAll, app.sortByLeastMissed(), app.mostMissedArray, "missed_votes_pct");
+                    app.membersVoteTheirParty(app.membersAll,app.sortByMostMissed(),app.leastMissedArray, "missed_votes_pct");
 
-                    app.membersVoteTheirParty(app.membersAll,app.sortByLeast(),app.leastArray);
 
                 }).catch(function (error) {
                    console.log("Request failed: " + error.message);
@@ -130,6 +147,11 @@ var app = new Vue({
             app.arrayVotesParty.push(array[i].votes_with_party_pct);
         }
     },
+    createArrayVotesMissed: function(array){
+        for(var i = 0; i < array.length; i++){
+            app.arrayVotesMissed.push(array[i].missed_votes_pct);
+        }
+    },
     sortByLeast: function(){
     app.arrayVotesParty.sort(function(a, b){return a-b});
     return app.arrayVotesParty;
@@ -138,7 +160,15 @@ var app = new Vue({
         app.arrayVotesParty.sort(function(a, b){return b-a});
         return app.arrayVotesParty;
     },
-    membersVoteTheirParty: function(array,array2,array3){
+    sortByLeastMissed: function(){
+    app.arrayVotesMissed.sort(function(a, b){return a-b});
+    return app.arrayVotesMissed;
+    },
+    sortByMostMissed: function(){
+        app.arrayVotesMissed.sort(function(a, b){return b-a});
+        return app.arrayVotesMissed;
+    },
+    membersVoteTheirParty: function(array,array2,array3, key){
         var tenPctArray = [];
         var tenPcntNum = (array.length * 10)/100;
         tenPcntNum = tenPcntNum.toFixed(0);
@@ -149,7 +179,7 @@ var app = new Vue({
         }
 
         var arrayWithoutTenPct = []; 
-        console.log(array2)
+        console.log(tenPctArray)
 
         for(var m = 0; m < array2.length; m++){
             if(m > tenPctArray.length-1){
@@ -166,11 +196,11 @@ var app = new Vue({
             }
         }
 
-        console.log(tenPctArray);
+        console.log(tenPctArray.length);
 
         for(var s = 0; s<tenPctArray.length; s++){
             for(var l = 0; l<array.length; l++){
-                if(array2[s]=== array[l].votes_with_party_pct){
+                if(array2[s]=== array[l][key]){
                     if(array3.indexOf(array[l])==-1){
                         array3.push(array[l]);
 
@@ -179,11 +209,12 @@ var app = new Vue({
             }
         }
         console.log(array3);
+    },
+    loader: function(){
+        var containerLoader = document.getElementById("containerLoader");
+        setTimeout(function(){
+            containerLoader.classList.add("cerrar");
+        },);    
     }
  } 
 })
-
-var containerLoader = document.getElementById("containerLoader");
-setTimeout(function(){
-    containerLoader.classList.add("cerrar");
-},2000);

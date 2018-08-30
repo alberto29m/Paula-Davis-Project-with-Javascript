@@ -110,7 +110,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for= "member in leastArray">
+                                <tr v-for= "member in mostMissedArray">
                                     <td><a :href="member.url">{{fullName(member)}}</a></td>
                                     <td>{{member.missed_votes}} </td>
                                     <td>{{member.missed_votes_pct}} % </td>
@@ -129,10 +129,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for= "member in mostArray">
+                                <tr v-for= "member in leastMissedArray">
                                     <td><a :href="member.url">{{fullName(member)}}</a></td>
                                     <td>{{member.missed_votes}} </td>
-                                    <td>{{member.missed_votes_pct}} </td>
+                                    <td>{{member.missed_votes_pct}}%</td>
                                 </tr>
                             </tbody>
                 

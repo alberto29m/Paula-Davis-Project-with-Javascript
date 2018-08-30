@@ -10,13 +10,13 @@
     </head>
     
     <body>
+        <div id="appsenatehouse">
+        <div class= "container" id = "senate">
         <div class = "containerLoader" id="containerLoader">
             <div class= "preloader">
                 <p>Loading...</p>
             </div>
         </div>
-        <div id="appsenatehouse">
-        <div class= "container" id = "senate">
             <div class = "row">
              <div class = "col-sm-6">
                     <img src = "Images/logo.jpg" class="img-rounded" alt = "TGIF_logo">
@@ -81,10 +81,11 @@
                                 <td >{{member.party}} </td>
                                 <td>{{member.state}} </td>
                                 <td>{{member.seniority}} </td>
-                                <td>{{member.votes_with_party_pct}} </td>
+                                <td>{{member.votes_with_party_pct}}</td>                             
                             </tr>
                         </tbody>
                     </table>
+                    <div id = "messageNoData" v-if ="allMembers2.length === 0"><h3>NO DATA RESULTS</h3></div>
     	       </div>
                <div class = "panel-footer">
                     <p>©2016 TGIF | All Right Reservered</p>
